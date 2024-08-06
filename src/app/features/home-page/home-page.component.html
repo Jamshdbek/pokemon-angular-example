@@ -1,2 +1,5 @@
-<p>home-page works! </p>
-<app-card></app-card>
+<p>home-page works!</p>
+<button (click)="getPage(0)">click</button>
+@if(PokemonList){ @for (pokemonItem of PokemonList; track $index) {
+<app-card [pokemonItem]="pokemonItem"></app-card>
+} }
