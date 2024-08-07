@@ -2,8 +2,6 @@ import {
   ChangeDetectionStrategy,
   Component,
   OnInit,
-  effect,
-  signal,
 } from '@angular/core';
 import { CardComponent } from './components/card/card.component';
 import { PokemonService } from '../../services/pokemon.service';
@@ -23,8 +21,8 @@ import { CommonModule } from '@angular/common';
   styleUrl: './home-page.component.scss',
 })
 export class HomePageComponent implements OnInit {
-  public pokemonList$!: Observable<any[]>;
-  public error$!: Observable<any>;
+  public pokemonList$!: Observable<PokemonDetail[]>;
+  public error$!: Observable<void>;
   public offset: number = 0;
   public isLoading: boolean = false;
   constructor(private store: Store<{ cart: { pokemon: PokemonList[] } }>) {
