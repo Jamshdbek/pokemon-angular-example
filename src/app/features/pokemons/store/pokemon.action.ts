@@ -1,16 +1,15 @@
 import { createAction, props } from '@ngrx/store';
 import { PokemonDetail, PokemonList } from '../pokemon.type';
+
 export const loadPokemon = createAction(
   '[Pokemon] Load Pokemon',
   props<{ offset: number; limit: number }>()
 );
-
-export const getPokemonSuccess = createAction(
+export const loadPokemonSuccess = createAction(
   '[Pokemon] Get Pokemon',
   props<{ pokemon: PokemonList[] }>()
 );
-
-export const errorPokemon = createAction(
+export const loadPokemonFailure = createAction(
   '[Pokemon] Error Pokemon',
   props<{ errorMessage: string }>()
 );
@@ -20,27 +19,25 @@ export const loadPokemonDetail = createAction(
   '[Pokemon] Load PokemonDetail',
   props<{ name: string }>()
 );
-
-export const getPokemonDetailSuccess = createAction(
+export const loadPokemonDetailSuccess = createAction(
   '[Pokemon] Get PokemonDetailList',
   props<{ pokemonDetailList: PokemonDetail[] }>()
 );
-
-export const errorPokemonDetail = createAction(
+export const loadPokemonDetailFailure = createAction(
   '[Pokemon] Error PokemonDetailError',
   props<{ errorMessage: string }>()
 );
 
 //  by id
-export const setPokemonDetailById = createAction(
+export const loadPokemonDetailById = createAction(
   '[Pokemon]  setPokemonDetailById',
   props<{ id: string | number }>()
 );
-export const pokemonDetailByIdSuccess = createAction(
+export const loadPokemonDetailByIdSuccess = createAction(
   '[Pokemon] Get pokemonDetailByIdSuccess',
   props<{ pokemonDetails: PokemonDetail }>()
 );
-export const pokemonDetailByIdError = createAction(
+export const loadPokemonDetailByIdFailure = createAction(
   '[Pokemon] Error pokemonDetailByIdError',
   props<{ errorMessage: string }>()
 );

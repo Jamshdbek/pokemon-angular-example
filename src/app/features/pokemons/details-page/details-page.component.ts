@@ -3,45 +3,45 @@ import {
   Component,
   OnDestroy,
   OnInit,
-  signal,
+  inject,
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Observable, Subscription } from 'rxjs';
-import { PokemonDetail } from '../pokemon.type';
+import { Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';
 import * as PokemonAction from '../store/pokemon.action';
 import * as PokemonSelector from '../store/pokemon.selector';
-import { CommonModule } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 @Component({
   selector: 'app-details-page',
   standalone: true,
-  imports: [CommonModule],
+  imports: [AsyncPipe],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './details-page.component.html',
   styleUrl: './details-page.component.scss',
 })
 export class DetailsPageComponent implements OnInit, OnDestroy {
+  store = inject(Store);
   private routerSub: Subscription | undefined;
-  public pokemonDetails$!: Observable<PokemonDetail>;
-  public object?: PokemonDetail;
-  constructor(
-    private route: ActivatedRoute,
-    private store: Store<PokemonDetail>
-  ) {
-    this.pokemonDetails$ = this.store.select(
-      PokemonSelector.selectAllPokemonDetailById
+  public isLoading$ = this.store.select(PokemonSelector.selectLoading);
+  pokemonDetails$ = this.store.select(
+    PokemonSelector.selectAllPokemonDetailById
+  );
+
+  constructor(private route: ActivatedRoute) {
+    console.log(
+      this.isLoading$.subscribe((res) => {
+        console.log(res);
+      }),
+      'is loading!!!!!!'
     );
-    this.pokemonDetails$.subscribe((res) => {
-      this.object = res;
-    });
   }
 
   ngOnInit(): void {
-    this.routerSub = this.route.params.subscribe((params) => {
-      this.store.dispatch(
-        PokemonAction.setPokemonDetailById({ id: params['id'] })
-      );
-    });
+    this.store.dispatch(
+      PokemonAction.loadPokemonDetailById({
+        id: this.route.snapshot.params['id'],
+      })
+    );
   }
   ngOnDestroy(): void {
     this.routerSub?.unsubscribe();

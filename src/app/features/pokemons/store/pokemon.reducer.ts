@@ -6,44 +6,66 @@ export interface PokemonState {
   pokemonDetailList: PokemonDetail[];
   pokemonDetails: PokemonDetail;
   error: string | null;
+  loading: boolean;
 }
 
 export const injectPokemonState: PokemonState = {
   pokemon: [],
   pokemonDetailList: [],
   pokemonDetails: {} as PokemonDetail,
+  loading: false,
   error: '',
 };
 
 export const ProductReducer = createReducer(
   injectPokemonState,
-  on(PokemonAction.getPokemonSuccess, (state, { pokemon }) => ({
+  on(PokemonAction.loadPokemon, (state) => ({
+    ...state,
+    loading: true,
+    error: '',
+  })),
+  on(PokemonAction.loadPokemonSuccess, (state, { pokemon }) => ({
     ...state,
     pokemon,
     error: '',
   })),
-  on(PokemonAction.errorPokemon, (state, { errorMessage }) => ({
+  on(PokemonAction.loadPokemonFailure, (state, { errorMessage }) => ({
     ...state,
     error: errorMessage,
   })),
+
   // pokemon by details list
-  on(PokemonAction.getPokemonDetailSuccess, (state, { pokemonDetailList }) => ({
-    ...state,
-    pokemonDetailList,
-    error: '',
-  })),
-  on(PokemonAction.errorPokemonDetail, (state, { errorMessage }) => ({
+  on(
+    PokemonAction.loadPokemonDetailSuccess,
+    (state, { pokemonDetailList }) => ({
+      ...state,
+      pokemonDetailList,
+      error: '',
+    })
+  ),
+  on(PokemonAction.loadPokemonDetailFailure, (state, { errorMessage }) => ({
     ...state,
     error: errorMessage,
   })),
+
   // pokemon by details
-  on(PokemonAction.pokemonDetailByIdSuccess, (state, { pokemonDetails }) => ({
+  on(PokemonAction.loadPokemonDetailById, (state) => ({
     ...state,
-    pokemonDetails,
+    loading: true,
     error: '',
   })),
-  on(PokemonAction.pokemonDetailByIdError, (state, { errorMessage }) => ({
+  on(
+    PokemonAction.loadPokemonDetailByIdSuccess,
+    (state, { pokemonDetails }) => ({
+      ...state,
+      pokemonDetails,
+      loading: false,
+      error: '',
+    })
+  ),
+  on(PokemonAction.loadPokemonDetailByIdFailure, (state, { errorMessage }) => ({
     ...state,
+    loading: false,
     error: errorMessage,
   }))
 );

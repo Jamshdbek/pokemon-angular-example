@@ -15,10 +15,10 @@ export class PokemonEffect {
       ofType(PokemonAction.loadPokemon),
       switchMap(({ offset, limit }) =>
         this.api.getPokemonList(offset, limit).pipe(
-          map((res) => PokemonAction.getPokemonSuccess({ pokemon: res })),
+          map((res) => PokemonAction.loadPokemonSuccess({ pokemon: res })),
           catchError((err: { message: string }) =>
             of(
-              PokemonAction.errorPokemon({
+              PokemonAction.loadPokemonFailure({
                 errorMessage: err.message || 'Fail to Load Pokemon',
               })
             )
@@ -31,19 +31,19 @@ export class PokemonEffect {
   // Effect for loading Pokémon details
   loadPokemonDetail$ = createEffect(() => {
     return this.actions$.pipe(
-      ofType(PokemonAction.getPokemonSuccess),
+      ofType(PokemonAction.loadPokemonSuccess),
       mergeMap(({ pokemon }) =>
         forkJoin(
           pokemon.map((item) => this.api.getPokemonDetails(item.name))
         ).pipe(
           map((detailsList) => {
-            return PokemonAction.getPokemonDetailSuccess({
+            return PokemonAction.loadPokemonDetailSuccess({
               pokemonDetailList: detailsList,
             });
           }),
           catchError((err: { message: string }) =>
             of(
-              PokemonAction.errorPokemonDetail({
+              PokemonAction.loadPokemonDetailFailure({
                 errorMessage: err.message || 'Fail to Load Pokemon Details',
               })
             )
@@ -52,19 +52,19 @@ export class PokemonEffect {
       )
     );
   });
-  // Effect for loading by id Pokémon details
 
+  // Effect for loading by id Pokémon details
   loadPokemonById$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(PokemonAction.setPokemonDetailById),
+      ofType(PokemonAction.loadPokemonDetailById),
       switchMap(({ id }) =>
         this.api.getPokemonDetails(id).pipe(
           map((res) =>
-            PokemonAction.pokemonDetailByIdSuccess({ pokemonDetails: res })
+            PokemonAction.loadPokemonDetailByIdSuccess({ pokemonDetails: res })
           ),
           catchError((err: { message: string }) =>
             of(
-              PokemonAction.errorPokemon({
+              PokemonAction.loadPokemonDetailByIdFailure({
                 errorMessage: err.message || 'Fail to Load Pokemon',
               })
             )

@@ -12,8 +12,7 @@ export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
-    provideStore(),
-    provideState({ name: 'pokemon', reducer: ProductReducer }),
+    provideStore({ pokemon: ProductReducer }),
     provideEffects(PokemonEffect),
     provideHttpClient(),
   ],
