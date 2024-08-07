@@ -1,1 +1,29 @@
-<p>details-page works!</p>
+@if(!isLoading){
+<div class="mx-[40vh] flex mt-20">
+  @if(pokemonDetails$ | async){
+  <div class="flex items-center text-start gap-10">
+    <img src="{{ object?.sprites?.front_default }}" alt="" width="150" />
+    <div>
+      <p class="text-1xl">Id: {{ object?.id }}</p>
+      <p class="text-1xl">Name: {{ object?.name }}</p>
+      <p class="text-1xl">Height: {{ object?.height }}</p>
+      <p class="text-1xl">Order: {{ object?.order }}</p>
+      <div>
+        <p class="text-1xl">Stats:</p>
+
+        <div class="flex gap-1">
+          @for (item of object?.stats; track $index) {
+          <p class="bg-green-500 rounded-full text-[14px] text-white p-2">
+            {{ item.stat.name }}
+            <span>{{ item.base_stat }}</span>
+          </p>
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+  }
+</div>
+} @else{
+<p class="mx-[40vh]">Loading...</p>
+}

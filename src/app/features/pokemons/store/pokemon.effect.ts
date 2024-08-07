@@ -52,4 +52,25 @@ export class PokemonEffect {
       )
     );
   });
+  // Effect for loading by id Pokémon details
+
+  loadPokemonById$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(PokemonAction.setPokemonDetailById),
+      switchMap(({ id }) =>
+        this.api.getPokemonDetails(id).pipe(
+          map((res) =>
+            PokemonAction.pokemonDetailByIdSuccess({ pokemonDetails: res })
+          ),
+          catchError((err: { message: string }) =>
+            of(
+              PokemonAction.errorPokemon({
+                errorMessage: err.message || 'Fail to Load Pokemon',
+              })
+            )
+          )
+        )
+      )
+    )
+  );
 }

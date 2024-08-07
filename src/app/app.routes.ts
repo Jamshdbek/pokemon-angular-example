@@ -5,17 +5,14 @@ import { DetailsPageComponent } from './features/pokemons/details-page/details-p
 export const routes: Routes = [
   {
     path: '',
-    pathMatch: 'full',
     component: HomePageComponent,
-    children: [
-      {
-        path: ':id',
-        component: DetailsPageComponent,
-      },
-    ],
   },
   {
-    path: '**',
-    component: HomePageComponent,
+    path: 'pokemon/:id',
+    component: DetailsPageComponent,
   },
+  // {
+  //   path: '**',
+  //   redirectTo: '', // Redirect to the home page for undefined routes
+  // },
 ];

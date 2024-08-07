@@ -30,3 +30,17 @@ export const errorPokemonDetail = createAction(
   '[Pokemon] Error PokemonDetailError',
   props<{ errorMessage: string }>()
 );
+
+//  by id
+export const setPokemonDetailById = createAction(
+  '[Pokemon]  setPokemonDetailById',
+  props<{ id: string | number }>()
+);
+export const pokemonDetailByIdSuccess = createAction(
+  '[Pokemon] Get pokemonDetailByIdSuccess',
+  props<{ pokemonDetails: PokemonDetail }>()
+);
+export const pokemonDetailByIdError = createAction(
+  '[Pokemon] Error pokemonDetailByIdError',
+  props<{ errorMessage: string }>()
+);

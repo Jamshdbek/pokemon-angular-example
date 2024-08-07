@@ -8,7 +8,7 @@ import { PokemonDetail, PokemonList } from './pokemon.type';
 })
 export class PokemonService {
   private baseUrl = 'https://pokeapi.co/api/v2/';
-  http = inject(HttpClient);
+  private http = inject(HttpClient);
 
   constructor() {}
 

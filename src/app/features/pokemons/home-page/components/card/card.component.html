@@ -5,7 +5,9 @@
     class="w-full bg-yellow-300 min-h-24 rounded-b-[50%] rounded-t-md z-1"
   ></div>
   @if(pokemonItem){
-  <p class="font-bold bg-white rounded-full z-10 absolute top-2 right-2 px-8">Id:{{ pokemonItem.id }}</p>
+  <p class="font-bold bg-white rounded-full z-10 absolute top-2 right-2 px-8">
+    Id:{{ pokemonItem.id }}
+  </p>
   <img
     src="https://projectpokemon.org/images/normal-sprite/{{
       pokemonItem.name
@@ -36,7 +38,12 @@
   </div>
   <!-- navigate button -->
   <div>
-    <button class="p-2 bg-green-400 rounded-full text-white">Show More</button>
+    <button
+      class="p-2 bg-green-400 rounded-full text-white"
+      (click)="handleNavigate(pokemonItem.id)"
+    >
+      Show More
+    </button>
   </div>
   }
 </div>
