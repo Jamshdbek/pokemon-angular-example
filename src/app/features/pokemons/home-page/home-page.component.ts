@@ -2,16 +2,15 @@ import {
   ChangeDetectionStrategy,
   Component,
   OnInit,
+  signal,
 } from '@angular/core';
 import { CardComponent } from './components/card/card.component';
-import { PokemonService } from '../../services/pokemon.service';
 import { Observable } from 'rxjs';
-import { PokemonDetail, PokemonList } from '../../shared/types/pokemon.type';
 import { Store } from '@ngrx/store';
-import * as PokemonAction from '../../states/pokemon/pokemon.action';
-import * as PokemonSelector from '../../states/pokemon/pokemon.selector';
 import { CommonModule } from '@angular/common';
-
+import { PokemonDetail, PokemonList } from '../pokemon.type';
+import * as PokemonAction from '../store/pokemon.action';
+import * as PokemonSelector from "../store/pokemon.selector"
 @Component({
   selector: 'app-home-page',
   standalone: true,
@@ -23,8 +22,8 @@ import { CommonModule } from '@angular/common';
 export class HomePageComponent implements OnInit {
   public pokemonList$!: Observable<PokemonDetail[]>;
   public error$!: Observable<void>;
-  public offset: number = 0;
-  public isLoading: boolean = false;
+  public offset = signal(0);
+  public isLoading = false;
   constructor(private store: Store<{ cart: { pokemon: PokemonList[] } }>) {
     this.pokemonList$ = this.store.select(
       PokemonSelector.selectAllPokemonDetail
@@ -33,6 +32,18 @@ export class HomePageComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.store.dispatch(PokemonAction.loadPokemon({ offset: 0, limit: 6 }));
+    this.store.dispatch(
+      PokemonAction.loadPokemon({ offset: this.offset(), limit: 6 })
+    );
+  }
+
+  handleShowMore(): void {
+    this.offset() + 6;
+    this.store.dispatch(
+      PokemonAction.loadPokemon({
+        offset: 0,
+        limit: this.offset(),
+      })
+    );
   }
 }

@@ -1,14 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable, map } from 'rxjs';
-import { PokemonDetail, PokemonList } from '../shared/types/pokemon.type';
+import { PokemonDetail, PokemonList } from './pokemon.type';
 
 @Injectable({
   providedIn: 'root',
 })
 export class PokemonService {
   private baseUrl = 'https://pokeapi.co/api/v2/';
-  http: HttpClient = inject(HttpClient);
+  http = inject(HttpClient);
 
   constructor() {}
 

@@ -1,6 +1,6 @@
 import { createReducer, on } from '@ngrx/store';
-import { PokemonDetail, PokemonList } from '../../shared/types/pokemon.type';
 import * as PokemonAction from './pokemon.action';
+import { PokemonDetail, PokemonList } from '../pokemon.type';
 export interface PokemonState {
   pokemon: PokemonList[];
   pokemonDetailList: PokemonDetail[];

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { HomePageComponent } from './features/home-page/home-page.component';
+import { HomePageComponent } from './features/pokemons/home-page/home-page.component';
 
 @Component({
   selector: 'app-root',

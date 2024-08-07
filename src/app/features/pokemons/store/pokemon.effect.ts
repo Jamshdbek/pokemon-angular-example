@@ -1,8 +1,8 @@
 import { Injectable, inject } from '@angular/core';
-import { PokemonService } from '../../services/pokemon.service';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import * as PokemonAction from './pokemon.action';
 import { catchError, forkJoin, map, mergeMap, of, switchMap } from 'rxjs';
+import { PokemonService } from '../pokemon.service';
 
 @Injectable()
 export class PokemonEffect {
@@ -52,5 +52,4 @@ export class PokemonEffect {
       )
     );
   });
-  //constructor(private actions$: Actions, private api: PokemonService) {}
 }

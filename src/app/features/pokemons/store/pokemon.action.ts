@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { PokemonDetail, PokemonList } from '../../shared/types/pokemon.type';
+import { PokemonDetail, PokemonList } from '../pokemon.type';
 export const loadPokemon = createAction(
   '[Pokemon] Load Pokemon',
   props<{ offset: number; limit: number }>()
@@ -23,7 +23,7 @@ export const loadPokemonDetail = createAction(
 
 export const getPokemonDetailSuccess = createAction(
   '[Pokemon] Get PokemonDetailList',
-  props<{ pokemonDetailList: any }>()
+  props<{ pokemonDetailList: PokemonDetail[] }>()
 );
 
 export const errorPokemonDetail = createAction(

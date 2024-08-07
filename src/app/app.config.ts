@@ -5,8 +5,8 @@ import { routes } from './app.routes';
 import { provideState, provideStore } from '@ngrx/store';
 import { provideEffects } from '@ngrx/effects';
 import { provideHttpClient } from '@angular/common/http';
-import { ProductReducer } from './states/pokemon/pokemon.reducer';
-import { PokemonEffect } from './states/pokemon/pokemon.effect';
+import { PokemonEffect } from './features/pokemons/store/pokemon.effect';
+import { ProductReducer } from './features/pokemons/store/pokemon.reducer';
 
 export const appConfig: ApplicationConfig = {
   providers: [
