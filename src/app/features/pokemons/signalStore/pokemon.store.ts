@@ -28,7 +28,6 @@ export const PokemonSignalStore = signalStore(
           return apiService.getPokemonList(0, 10).pipe(
             tapResponse({
               next: (pokemon: PokemonList[]) => {
-                console.log(pokemon, 'pokemon overdriwft');
                 return patchState(store, { pokemon, isLoading: false });
               },
               error: (err: string) => {
