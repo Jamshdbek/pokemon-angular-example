@@ -1,2 +1,42 @@
-<p>----------</p>
-{{ pokemonItem?.name }}
+<div
+  class="shadow-md text-center justify-center relative min-w-[20vh] min-h-[20vh] rounded-md pb-2"
+>
+  <div
+    class="w-full bg-yellow-300 min-h-24 rounded-b-[50%] rounded-t-md z-1"
+  ></div>
+  @if(pokemonItem){
+  <p class="font-bold bg-white rounded-full z-10 absolute top-2 right-2 px-8">Id:{{ pokemonItem.id }}</p>
+  <img
+    src="https://projectpokemon.org/images/normal-sprite/{{
+      pokemonItem.name
+    }}.gif"
+    class="m-auto z-10 transform inset-0 absolute top-0"
+    [alt]="pokemonItem.name"
+  />
+  <!-- name -->
+  <p class="text-1xl uppercase mt-28 bottom-0 font-bold">
+    {{ pokemonItem.name }}
+  </p>
+  <!-- details -->
+  <div class="w-full grid grid-cols-3 my-1">
+    <div>
+      <h4 class="font-bold">
+        {{ pokemonItem.height }}
+      </h4>
+      <p>Height</p>
+    </div>
+    <div>
+      <h4 class="font-bold">{{ pokemonItem.weight }}</h4>
+      <p>Experince</p>
+    </div>
+    <div>
+      <h4 class="font-bold">{{ pokemonItem.order }}</h4>
+      <p>Order</p>
+    </div>
+  </div>
+  <!-- navigate button -->
+  <div>
+    <button class="p-2 bg-green-400 rounded-full text-white">Show More</button>
+  </div>
+  }
+</div>

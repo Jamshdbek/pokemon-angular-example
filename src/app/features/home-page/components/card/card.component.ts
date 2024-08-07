@@ -4,7 +4,6 @@ import { PokemonDetail } from '../../../../shared/types/pokemon.type';
 @Component({
   selector: 'app-card',
   standalone: true,
-  imports: [],
   templateUrl: './card.component.html',
   styleUrl: './card.component.scss',
 })

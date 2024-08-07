@@ -12,10 +12,10 @@ export const routes: Routes = [
         path: ':id',
         component: DetailsPageComponent,
       },
-      {
-        path: '**',
-        component: HomePageComponent,
-      },
     ],
+  },
+  {
+    path: '**',
+    component: HomePageComponent,
   },
 ];

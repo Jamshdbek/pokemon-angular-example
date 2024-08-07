@@ -1,5 +1,7 @@
-<p>home-page works!</p>
-<button (click)="getPage(0)">click</button>
-@if(PokemonList){ @for (pokemonItem of PokemonList; track $index) {
-<app-card [pokemonItem]="pokemonItem"></app-card>
-} }
+<br />
+<div class="grid grid-cols-3 gap-2 mx-[20vh] xl:mx-[40vh] lg:mx-[10vh]">
+  @if (pokemonList$ | async) { @for (item of pokemonList$ | async; track $index)
+  {
+  <app-card [pokemonItem]="item"></app-card>
+  } }
+</div>
