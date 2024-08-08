@@ -16,9 +16,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class CardComponent {
   private router = inject(Router);
   public pokemonItem = input.required<PokemonDetail>();
-  // @Input() pokemonItem?: PokemonDetail;
+  private route = inject(ActivatedRoute)
 
-  constructor(private route: ActivatedRoute) {}
   handleNavigate(id: number | string): void {
     if (id) {
       this.router.navigate(['/pokemon', id], { relativeTo: this.route });

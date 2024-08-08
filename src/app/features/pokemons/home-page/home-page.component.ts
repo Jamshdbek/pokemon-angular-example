@@ -5,13 +5,13 @@ import {
   signal,
 } from '@angular/core';
 import { CardComponent } from './components/card/card.component';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { CommonModule } from '@angular/common';
 import { PokemonDetail } from '../pokemon.type';
 import * as PokemonAction from '../store/pokemon.action';
 import * as PokemonSelector from '../store/pokemon.selector';
-import { Router, RouterModule } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { PokemonSignalStore } from '../signalStore/pokemon.store';
 
 @Component({
@@ -23,9 +23,8 @@ import { PokemonSignalStore } from '../signalStore/pokemon.store';
   templateUrl: './home-page.component.html',
 })
 export class HomePageComponent {
-  router = inject(Router);
   // classic store
-  store = inject(Store);
+  private store = inject(Store);
   // signal store
   public pokemonSignalStore = inject(PokemonSignalStore);
   // observables
@@ -37,11 +36,11 @@ export class HomePageComponent {
   public error$: Observable<void> = this.store.select(
     PokemonSelector.selectPokemonError
   );
-  public offset = signal(0);
+  private offset = signal(6);
 
   constructor() {
     this.store.dispatch(
-      PokemonAction.loadPokemon({ offset: this.offset(), limit: 6 })
+      PokemonAction.loadPokemon({ offset: 0, limit: this.offset() })
     );
     // fetch request signal ----------------------------------------------
     this.pokemonSignalStore.loadPokemonQuery({ offset: 0, limit: 6 });

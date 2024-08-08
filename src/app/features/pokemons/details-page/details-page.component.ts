@@ -1,8 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  inject,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import * as PokemonAction from '../store/pokemon.action';
@@ -17,12 +13,13 @@ import { AsyncPipe } from '@angular/common';
 })
 export class DetailsPageComponent {
   private store = inject(Store);
+  private route = inject(ActivatedRoute);
   public isLoading$ = this.store.select(PokemonSelector.selectLoading);
   public pokemonDetails$ = this.store.select(
     PokemonSelector.selectAllPokemonDetailById
   );
 
-  constructor(private route: ActivatedRoute) {
+  constructor() {
     this.store.dispatch(
       PokemonAction.loadPokemonDetailById({
         id: this.route.snapshot.params['id'],
