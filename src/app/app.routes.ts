@@ -11,8 +11,8 @@ export const routes: Routes = [
     path: 'pokemon/:id',
     component: DetailsPageComponent,
   },
-  // {
-  //   path: '**',
-  //   redirectTo: '', // Redirect to the home page for undefined routes
-  // },
+  {
+    path: '**',
+    redirectTo: '', // Redirect to the home page for undefined routes
+  },
 ];

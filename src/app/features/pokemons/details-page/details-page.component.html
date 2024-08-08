@@ -1,15 +1,15 @@
 @if(isLoading$ |async) {
-<p class=" m-auto w-full text-center mt-30">Loading...</p>
+<p class="m-auto w-full text-center mt-30">Loading...</p>
 } @else {
 <div class="mx-[40vh] flex mt-20">
   @if(pokemonDetails$ | async; as data){
   <div class="flex items-center text-start gap-10">
     <img src="{{ data?.sprites?.front_default }}" alt="" width="150" />
     <div>
-      <p class="text-1xl">Id: {{ data?.id }}</p>
-      <p class="text-1xl">Name: {{ data?.name }}</p>
-      <p class="text-1xl">Height: {{ data?.height }}</p>
-      <p class="text-1xl">Order: {{ data?.order }}</p>
+      <p class="text-1xl">Id: {{ data.id }}</p>
+      <p class="text-1xl">Name: {{ data.name }}</p>
+      <p class="text-1xl">Height: {{ data.height }}</p>
+      <p class="text-1xl">Order: {{ data.order }}</p>
       <div>
         <p class="text-1xl">Stats:</p>
 

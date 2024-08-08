@@ -5,7 +5,7 @@ import {
   signal,
 } from '@angular/core';
 import { CardComponent } from './components/card/card.component';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { CommonModule } from '@angular/common';
 import { PokemonDetail } from '../pokemon.type';
