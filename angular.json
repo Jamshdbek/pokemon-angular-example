@@ -6,8 +6,12 @@
     "pokemon": {
       "projectType": "application",
       "schematics": {
+        "@schematics/angular:application": {
+          "skipTests": true
+        },
         "@schematics/angular:component": {
           "style": "scss"
+
         }
       },
       "root": "",
