@@ -1,7 +1,6 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  OnInit,
   inject,
   signal,
 } from '@angular/core';
@@ -14,6 +13,7 @@ import * as PokemonAction from '../store/pokemon.action';
 import * as PokemonSelector from '../store/pokemon.selector';
 import { Router, RouterModule } from '@angular/router';
 import { PokemonSignalStore } from '../signalStore/pokemon.store';
+
 @Component({
   selector: 'app-home-page',
   standalone: true,
@@ -21,9 +21,8 @@ import { PokemonSignalStore } from '../signalStore/pokemon.store';
   providers: [PokemonSignalStore],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './home-page.component.html',
-  styleUrl: './home-page.component.scss',
 })
-export class HomePageComponent implements OnInit {
+export class HomePageComponent {
   router = inject(Router);
   // classic store
   store = inject(Store);
@@ -39,10 +38,8 @@ export class HomePageComponent implements OnInit {
     PokemonSelector.selectPokemonError
   );
   public offset = signal(0);
+
   constructor() {
-    console.log(this.pokemonSignalStore.pokemon, 'pokemon data');
-  }
-  ngOnInit(): void {
     this.store.dispatch(
       PokemonAction.loadPokemon({ offset: this.offset(), limit: 6 })
     );
@@ -51,7 +48,7 @@ export class HomePageComponent implements OnInit {
   }
 
   handleShowMore(): void {
-    this.offset() + 6;
+    this.offset.update((x) => x + 6);
     this.store.dispatch(
       PokemonAction.loadPokemon({
         offset: 0,

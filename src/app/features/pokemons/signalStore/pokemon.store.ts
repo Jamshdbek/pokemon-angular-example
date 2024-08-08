@@ -34,11 +34,16 @@ export const PokemonSignalStore = signalStore(
               error: (err: string) => {
                 patchState(store, { error: err, isLoading: false });
                 console.error(err);
+
               },
             })
           )
         )
       )
     ),
+
+    loadPokemonDetailQuery: rxMethod<string>(
+      pipe()
+    )
   }))
 );

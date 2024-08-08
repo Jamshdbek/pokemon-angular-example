@@ -1,9 +1,8 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  Input,
-  Output,
   inject,
+  input,
 } from '@angular/core';
 import { PokemonDetail } from '../../../pokemon.type';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -13,11 +12,12 @@ import { ActivatedRoute, Router } from '@angular/router';
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './card.component.html',
-  styleUrl: './card.component.scss',
 })
 export class CardComponent {
-  router = inject(Router);
-  @Input() pokemonItem?: PokemonDetail;
+  private router = inject(Router);
+  public pokemonItem = input.required<PokemonDetail>();
+  // @Input() pokemonItem?: PokemonDetail;
+
   constructor(private route: ActivatedRoute) {}
   handleNavigate(id: number | string): void {
     if (id) {
