@@ -1,3 +1,8 @@
+export type FilterPokemonListType = {
+  offset: number;
+  limit: number;
+}
+
 export type PokemonList = {
   name: string;
   url: string;

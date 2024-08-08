@@ -1,10 +1,11 @@
 import { inject } from '@angular/core';
-import { PokemonList } from '../pokemon.type';
+import { FilterPokemonListType, PokemonList } from '../pokemon.type';
 import { patchState, signalStore, withMethods, withState } from '@ngrx/signals';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
 import { PokemonService } from '../pokemon.service';
 import { distinctUntilChanged, pipe, switchMap, tap } from 'rxjs';
 import { tapResponse } from '@ngrx/operators';
+
 type PokemonStoreSignal = {
   pokemon: PokemonList[];
   isLoading: boolean;
@@ -20,23 +21,23 @@ const initialState: PokemonStoreSignal = {
 export const PokemonSignalStore = signalStore(
   withState(initialState),
   withMethods((store, apiService = inject(PokemonService)) => ({
-    loadPokemonQuery: rxMethod(
+    loadPokemonQuery: rxMethod<FilterPokemonListType>(
       pipe(
         distinctUntilChanged(),
         tap(() => patchState(store, { isLoading: true })),
-        switchMap((query) => {
-          return apiService.getPokemonList(0, 10).pipe(
+        switchMap((query: FilterPokemonListType) =>
+          apiService.getPokemonList(query.offset, query.limit).pipe(
             tapResponse({
               next: (pokemon: PokemonList[]) => {
-                return patchState(store, { pokemon, isLoading: false });
+                patchState(store, { pokemon, isLoading: false });
               },
               error: (err: string) => {
-                patchState(store, { isLoading: false });
+                patchState(store, { error: err, isLoading: false });
                 console.error(err);
               },
             })
-          );
-        })
+          )
+        )
       )
     ),
   }))
