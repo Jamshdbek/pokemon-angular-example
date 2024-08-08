@@ -1,14 +1,10 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { HomePageComponent } from './features/pokemons/home-page/home-page.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, HomePageComponent],
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.scss',
+  imports: [RouterOutlet],
+  template: '<router-outlet></router-outlet>',
 })
-export class AppComponent {
-  title = 'pokemon';
-}
+export class AppComponent {}

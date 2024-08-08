@@ -41,9 +41,5 @@ export const PokemonSignalStore = signalStore(
         )
       )
     ),
-
-    loadPokemonDetailQuery: rxMethod<string>(
-      pipe()
-    )
   }))
 );
