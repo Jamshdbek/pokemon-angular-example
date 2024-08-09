@@ -21,7 +21,7 @@ export const selectPokemonError = createSelector(
 
 export const selectLoading = createSelector(
   selectorPokemonFeature,
-  state => state.loading
+  (state) => state.loading
 );
 export const selectAllPokemonDetailById = createSelector(
   selectorPokemonFeature,

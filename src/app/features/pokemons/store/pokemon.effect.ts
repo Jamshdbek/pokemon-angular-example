@@ -15,7 +15,11 @@ export class PokemonEffect {
       ofType(PokemonAction.loadPokemon),
       switchMap(({ offset, limit }) =>
         this.api.getPokemonList(offset, limit).pipe(
-          map((res) => PokemonAction.loadPokemonSuccess({ pokemon: res })),
+          map((res) =>
+            PokemonAction.loadPokemonSuccess({
+              pokemon: res,
+            })
+          ),
           catchError((err: { message: string }) =>
             of(
               PokemonAction.loadPokemonFailure({

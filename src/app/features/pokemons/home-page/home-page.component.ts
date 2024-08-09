@@ -25,7 +25,7 @@ import { PokemonSignalStore } from '../signalStore/pokemon.store';
 })
 export class HomePageComponent {
   // classic store
-  private store = inject(Store);
+  private readonly store = inject(Store);
   // signal store
   public pokemonSignalStore = inject(PokemonSignalStore);
   // observables
@@ -33,23 +33,28 @@ export class HomePageComponent {
   public pokemonList$: Observable<PokemonDetail[]> = this.store.select(
     PokemonSelector.selectAllPokemonDetail
   );
-  public isLoading$: Observable<boolean> = this.store.select(
-    PokemonSelector.selectLoading
-  );
-  private lastPagination = localStorage.getItem('lastPagination');
+
+  public isLoading = signal(false);
+  private offset = signal(6);
+
   public error$: Observable<void> = this.store.select(
     PokemonSelector.selectPokemonError
   );
-  private offset = signal(Number(this.lastPagination) | 6);
 
   constructor() {
     this.store.dispatch(
       PokemonAction.loadPokemon({ offset: 0, limit: this.offset() })
     );
+
     this.pokemonSignalStore.loadPokemonQuery({ offset: 0, limit: 6 });
+
+    this.pokemonList$.subscribe(() => {
+      this.isLoading.update(() => false);
+    });
   }
   handleShowMore(): void {
     this.offset.update((x) => x + 6);
+    this.isLoading.update(() => true);
     this.store.dispatch(
       PokemonAction.loadPokemon({
         offset: 0,

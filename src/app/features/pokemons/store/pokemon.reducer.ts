@@ -27,10 +27,13 @@ export const ProductReducer = createReducer(
   on(PokemonAction.loadPokemonSuccess, (state, { pokemon }) => ({
     ...state,
     pokemon,
+    loading: false,
     error: '',
   })),
   on(PokemonAction.loadPokemonFailure, (state, { errorMessage }) => ({
     ...state,
+    loading: false,
+    isLoadingList: false,
     error: errorMessage,
   })),
 
@@ -40,11 +43,13 @@ export const ProductReducer = createReducer(
     (state, { pokemonDetailList }) => ({
       ...state,
       pokemonDetailList,
+      loading: false,
       error: '',
     })
   ),
   on(PokemonAction.loadPokemonDetailFailure, (state, { errorMessage }) => ({
     ...state,
+    loading: false,
     error: errorMessage,
   })),
 
