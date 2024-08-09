@@ -1,5 +1,5 @@
 @if(pokemonDataBySignal()){
-<div class="flex gap-2 px-[20vh] my-10 justify-center">
+<div class="flex gap-2 px-52 my-10 justify-center">
   @for (pokemon of pokemonDataBySignal(); track $index) {
   <div class="mt-10 shadow-md rounded-full text-center p-2">
     {{ pokemon.name }}
@@ -9,11 +9,11 @@
 }
 <!-- pokemon list cards -->
 <div class="text-center p-1">
-  <div class="grid grid-cols-3 gap-2 mx-[20vh] xl:mx-[40vh] lg:mx-[10vh]">
-    @if (pokemonList$ | async) { @for(item of pokemonList$ | async; track
-    $index) {
+  @if (pokemonList$ | async) {
+  <div class="grid grid-cols-3 min-h-96 gap-2 mx-56 xl:mx-96 lg:mx-52">
+    @for(item of pokemonList$ | async; track $index) {
     <app-card [pokemonItem]="item"></app-card>
-    } }
+    }
   </div>
   <button
     class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded m-auto mt-10"
@@ -22,6 +22,7 @@
   >
     {{ isLoading() ? "Loading..." : "Show more" }}
   </button>
+  }
 </div>
 @if(error$ | async){
 <p>{{ error$ }}</p>

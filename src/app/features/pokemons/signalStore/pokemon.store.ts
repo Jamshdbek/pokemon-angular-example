@@ -23,10 +23,10 @@ export const PokemonSignalStore = signalStore(
   withMethods((store, apiService = inject(PokemonService)) => ({
     loadPokemonQuery: rxMethod<FilterPokemonListType>(
       pipe(
-        switchMap((query: FilterPokemonListType) =>
+        switchMap((query) =>
           apiService.getPokemonList(query.offset, query.limit).pipe(
             tapResponse({
-              next: (pokemon: PokemonList[]) => {
+              next: (pokemon) => {
                 patchState(store, { pokemon, isLoading: false });
               },
               error: (err: string) => {

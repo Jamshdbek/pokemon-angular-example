@@ -1,7 +1,14 @@
+export type PokemonServiceGetType = {
+  count: number;
+  next: string;
+  previous: null | number | string;
+  results: PokemonList[];
+};
+
 export type FilterPokemonListType = {
   offset: number;
   limit: number;
-}
+};
 
 export type PokemonList = {
   name: string;
