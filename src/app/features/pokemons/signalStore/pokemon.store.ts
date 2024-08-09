@@ -3,7 +3,7 @@ import { FilterPokemonListType, PokemonList } from '../pokemon.type';
 import { patchState, signalStore, withMethods, withState } from '@ngrx/signals';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
 import { PokemonService } from '../pokemon.service';
-import { distinctUntilChanged, pipe, switchMap, tap } from 'rxjs';
+import { pipe, switchMap } from 'rxjs';
 import { tapResponse } from '@ngrx/operators';
 
 type PokemonStoreSignal = {
@@ -23,8 +23,6 @@ export const PokemonSignalStore = signalStore(
   withMethods((store, apiService = inject(PokemonService)) => ({
     loadPokemonQuery: rxMethod<FilterPokemonListType>(
       pipe(
-        distinctUntilChanged(),
-        tap(() => patchState(store, { isLoading: true })),
         switchMap((query: FilterPokemonListType) =>
           apiService.getPokemonList(query.offset, query.limit).pipe(
             tapResponse({

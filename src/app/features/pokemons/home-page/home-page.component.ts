@@ -1,6 +1,7 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  OnDestroy,
   inject,
   signal,
 } from '@angular/core';
@@ -32,20 +33,21 @@ export class HomePageComponent {
   public pokemonList$: Observable<PokemonDetail[]> = this.store.select(
     PokemonSelector.selectAllPokemonDetail
   );
-  public isLoading = this.store.select(PokemonSelector.selectLoading);
+  public isLoading$: Observable<boolean> = this.store.select(
+    PokemonSelector.selectLoading
+  );
+  private lastPagination = localStorage.getItem('lastPagination');
   public error$: Observable<void> = this.store.select(
     PokemonSelector.selectPokemonError
   );
-  private offset = signal(6);
+  private offset = signal(Number(this.lastPagination) | 6);
 
   constructor() {
     this.store.dispatch(
       PokemonAction.loadPokemon({ offset: 0, limit: this.offset() })
     );
-    // fetch request signal ----------------------------------------------
     this.pokemonSignalStore.loadPokemonQuery({ offset: 0, limit: 6 });
   }
-
   handleShowMore(): void {
     this.offset.update((x) => x + 6);
     this.store.dispatch(
