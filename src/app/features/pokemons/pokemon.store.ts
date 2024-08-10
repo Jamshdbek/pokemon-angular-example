@@ -1,18 +1,18 @@
 import { inject } from '@angular/core';
-import { FilterPokemonListType, PokemonList } from '../pokemon.type';
+import { FilterPokemonList, PokemonList } from './pokemon.type';
 import { patchState, signalStore, withMethods, withState } from '@ngrx/signals';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
-import { PokemonService } from '../pokemon.service';
+import { PokemonService } from './pokemon.service';
 import { pipe, switchMap } from 'rxjs';
 import { tapResponse } from '@ngrx/operators';
 
-type PokemonStoreSignal = {
+type PokemonState = {
   pokemon: PokemonList[];
   isLoading: boolean;
   error: string;
 };
 
-const initialState: PokemonStoreSignal = {
+const initialState: PokemonState = {
   pokemon: [],
   isLoading: false,
   error: '',
@@ -21,7 +21,7 @@ const initialState: PokemonStoreSignal = {
 export const PokemonSignalStore = signalStore(
   withState(initialState),
   withMethods((store, apiService = inject(PokemonService)) => ({
-    loadPokemonQuery: rxMethod<FilterPokemonListType>(
+    loadPokemonQuery: rxMethod<FilterPokemonList>(
       pipe(
         switchMap((query) =>
           apiService.getPokemonList(query.offset, query.limit).pipe(

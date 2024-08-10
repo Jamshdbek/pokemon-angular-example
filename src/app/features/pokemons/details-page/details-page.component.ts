@@ -1,9 +1,9 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
-import * as PokemonAction from '../store/pokemon.action';
-import * as PokemonSelector from '../store/pokemon.selector';
-import { AsyncPipe } from '@angular/common';
+import { AsyncPipe, NgOptimizedImage } from '@angular/common';
+import { PokemonActions, PokemonSelectors } from '../store';
+
 @Component({
   selector: 'app-details-page',
   standalone: true,
@@ -14,14 +14,14 @@ import { AsyncPipe } from '@angular/common';
 export class DetailsPageComponent {
   private store = inject(Store);
   private route = inject(ActivatedRoute);
-  public isLoading$ = this.store.select(PokemonSelector.selectLoading);
+  public isLoading$ = this.store.select(PokemonSelectors.selectLoading);
   public pokemonDetails$ = this.store.select(
-    PokemonSelector.selectAllPokemonDetailById
+    PokemonSelectors.selectAllPokemonDetailById
   );
 
   constructor() {
     this.store.dispatch(
-      PokemonAction.loadPokemonDetailById({
+      PokemonActions.loadPokemonDetailById({
         id: this.route.snapshot.params['id'],
       })
     );

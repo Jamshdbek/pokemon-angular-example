@@ -1,6 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import * as PokemonAction from './pokemon.action';
+import { PokemonActions } from './';
 import { catchError, forkJoin, map, mergeMap, of, switchMap } from 'rxjs';
 import { PokemonService } from '../pokemon.service';
 
@@ -12,17 +12,17 @@ export class PokemonEffect {
   // Effect for loading Pokémon list
   loadPokemon$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(PokemonAction.loadPokemon),
+      ofType(PokemonActions.loadPokemon),
       switchMap(({ offset, limit }) =>
         this.api.getPokemonList(offset, limit).pipe(
           map((res) =>
-            PokemonAction.loadPokemonSuccess({
+            PokemonActions.loadPokemonSuccess({
               pokemon: res,
             })
           ),
           catchError((err: { message: string }) =>
             of(
-              PokemonAction.loadPokemonFailure({
+              PokemonActions.loadPokemonFailure({
                 errorMessage: err.message || 'Fail to Load Pokemon',
               })
             )
@@ -35,19 +35,19 @@ export class PokemonEffect {
   // Effect for loading Pokémon details
   loadPokemonDetail$ = createEffect(() => {
     return this.actions$.pipe(
-      ofType(PokemonAction.loadPokemonSuccess),
+      ofType(PokemonActions.loadPokemonSuccess),
       mergeMap(({ pokemon }) =>
         forkJoin(
           pokemon.map((item) => this.api.getPokemonDetails(item.name))
         ).pipe(
           map((detailsList) => {
-            return PokemonAction.loadPokemonDetailSuccess({
+            return PokemonActions.loadPokemonDetailSuccess({
               pokemonDetailList: detailsList,
             });
           }),
           catchError((err: { message: string }) =>
             of(
-              PokemonAction.loadPokemonDetailFailure({
+              PokemonActions.loadPokemonDetailFailure({
                 errorMessage: err.message || 'Fail to Load Pokemon Details',
               })
             )
@@ -60,15 +60,15 @@ export class PokemonEffect {
   // Effect for loading by id Pokémon details
   loadPokemonById$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(PokemonAction.loadPokemonDetailById),
+      ofType(PokemonActions.loadPokemonDetailById),
       switchMap(({ id }) =>
         this.api.getPokemonDetails(id).pipe(
           map((res) =>
-            PokemonAction.loadPokemonDetailByIdSuccess({ pokemonDetails: res })
+            PokemonActions.loadPokemonDetailByIdSuccess({ pokemonDetails: res })
           ),
           catchError((err: { message: string }) =>
             of(
-              PokemonAction.loadPokemonDetailByIdFailure({
+              PokemonActions.loadPokemonDetailByIdFailure({
                 errorMessage: err.message || 'Fail to Load Pokemon',
               })
             )

@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { map } from 'rxjs';
-import { PokemonDetail, PokemonServiceGetType } from './pokemon.type';
+import { PokemonDetail, GetPokemonListRes } from './pokemon.type';
 
 @Injectable({
   providedIn: 'root',
@@ -12,7 +12,7 @@ export class PokemonService {
 
   public getPokemonList(offset: number, limit: number) {
     return this.http
-      .get<PokemonServiceGetType>(
+      .get<GetPokemonListRes>(
         this.baseUrl + 'pokemon?limit=' + limit + '&offset=' + offset
       )
       .pipe(map((x) => x.results));

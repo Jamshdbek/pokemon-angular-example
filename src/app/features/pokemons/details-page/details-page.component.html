@@ -1,10 +1,10 @@
-@if(isLoading$ |async) {
+@if(isLoading$ | async) {
 <p class="m-auto w-full text-center mt-30">Loading...</p>
 } @else {
-<div class="flex mt-20 w-full  flex-col items-center">
+<div class="flex mt-20 w-full flex-col items-center">
   @if(pokemonDetails$ | async; as data){
   <div class="flex items-center text-start gap-10">
-    <img src="{{ data?.sprites?.front_default }}" alt="" width="150" />
+    <img src="{{ data.sprites.front_default }}" alt="404" width="150" />
     <div>
       <p class="text-1xl">Id: {{ data.id }}</p>
       <p class="text-1xl">Name: {{ data.name }}</p>

@@ -9,10 +9,9 @@ import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { CommonModule } from '@angular/common';
 import { PokemonDetail } from '../pokemon.type';
-import * as PokemonAction from '../store/pokemon.action';
-import * as PokemonSelector from '../store/pokemon.selector';
+import { PokemonActions, PokemonSelectors } from '../store';
 import { RouterModule } from '@angular/router';
-import { PokemonSignalStore } from '../signalStore/pokemon.store';
+import { PokemonSignalStore } from '../pokemon.store';
 
 @Component({
   selector: 'app-home-page',
@@ -30,19 +29,19 @@ export class HomePageComponent {
   // observables
   public pokemonDataBySignal = this.pokemonSignalStore.pokemon;
   public pokemonList$: Observable<PokemonDetail[]> = this.store.select(
-    PokemonSelector.selectAllPokemonDetail
+    PokemonSelectors.selectAllPokemonDetail
   );
 
   public isLoading = signal(false);
   private offset = signal(6);
 
   public error$: Observable<void> = this.store.select(
-    PokemonSelector.selectPokemonError
+    PokemonSelectors.selectPokemonError
   );
 
   constructor() {
     this.store.dispatch(
-      PokemonAction.loadPokemon({ offset: 0, limit: this.offset() })
+      PokemonActions.loadPokemon({ offset: 0, limit: this.offset() })
     );
 
     this.pokemonSignalStore.loadPokemonQuery({ offset: 0, limit: 6 });
@@ -55,7 +54,7 @@ export class HomePageComponent {
     this.offset.update((x) => x + 6);
     this.isLoading.update(() => true);
     this.store.dispatch(
-      PokemonAction.loadPokemon({
+      PokemonActions.loadPokemon({
         offset: 0,
         limit: this.offset(),
       })
