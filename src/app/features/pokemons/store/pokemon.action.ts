@@ -7,7 +7,7 @@ export const loadPokemon = createAction(
 );
 export const loadPokemonSuccess = createAction(
   '[Pokemon] Get Pokemon',
-  props<{ pokemon: PokemonList[] }>()
+  props<{ pokemons: PokemonList[] }>()
 );
 export const loadPokemonFailure = createAction(
   '[Pokemon] Error Pokemon',
@@ -17,7 +17,7 @@ export const loadPokemonFailure = createAction(
 // pokemon details
 export const loadPokemonDetail = createAction(
   '[Pokemon] Load PokemonDetail',
-  props<{ name: string }>()
+  props<{ pokemonDetailList: PokemonDetail[] }>()
 );
 export const loadPokemonDetailSuccess = createAction(
   '[Pokemon] Get PokemonDetailList',

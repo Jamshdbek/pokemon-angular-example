@@ -17,7 +17,7 @@ export class PokemonEffect {
         this.api.getPokemonList(offset, limit).pipe(
           map((res) =>
             PokemonActions.loadPokemonSuccess({
-              pokemon: res,
+              pokemons: res,
             })
           ),
           catchError((err: { message: string }) =>
@@ -36,9 +36,9 @@ export class PokemonEffect {
   loadPokemonDetail$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(PokemonActions.loadPokemonSuccess),
-      mergeMap(({ pokemon }) =>
+      mergeMap(({ pokemons }) =>
         forkJoin(
-          pokemon.map((item) => this.api.getPokemonDetails(item.name))
+          pokemons.map((item) => this.api.getPokemonDetails(item.name))
         ).pipe(
           map((detailsList) => {
             return PokemonActions.loadPokemonDetailSuccess({

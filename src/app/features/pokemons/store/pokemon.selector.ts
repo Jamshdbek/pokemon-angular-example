@@ -6,7 +6,7 @@ export const selectorPokemonFeature =
 
 export const selectAllPokemon = createSelector(
   selectorPokemonFeature,
-  (state) => state.pokemon
+  (state) => state.pokemons
 );
 export const selectAllPokemonDetail = createSelector(
   selectorPokemonFeature,

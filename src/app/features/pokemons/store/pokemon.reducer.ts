@@ -2,15 +2,15 @@ import { createReducer, on } from '@ngrx/store';
 import  {PokemonActions} from './';
 import { PokemonDetail, PokemonList } from '../pokemon.type';
 export interface PokemonState {
-  pokemon: PokemonList[];
-  pokemonDetailList: PokemonDetail[];
-  pokemonDetails: PokemonDetail | undefined;
+  pokemons: PokemonList[];
+  pokemonDetailList: PokemonDetail[];  // pokemon details
+  pokemonDetails: PokemonDetail | undefined; // connected by page
   error: string | null;
   loading: boolean;
 }
 
 export const initialState: PokemonState = {
-  pokemon: [],
+  pokemons: [],
   pokemonDetailList: [],
   pokemonDetails: undefined,
   loading: false,
@@ -24,9 +24,9 @@ export const ProductReducer = createReducer(
     loading: true,
     error: '',
   })),
-  on(PokemonActions.loadPokemonSuccess, (state, { pokemon }): PokemonState => ({
+  on(PokemonActions.loadPokemonSuccess, (state, { pokemons }): PokemonState => ({
     ...state,
-    pokemon,
+    pokemons,
     loading: false,
     error: '',
   })),
@@ -37,6 +37,15 @@ export const ProductReducer = createReducer(
   })),
 
   // pokemon by details list
+  on(
+    PokemonActions.loadPokemonDetail,
+    (state, { pokemonDetailList }): PokemonState => ({
+      ...state,
+      pokemonDetailList,
+      loading: true,
+      error: '',
+    })
+  ),
   on(
     PokemonActions.loadPokemonDetailSuccess,
     (state, { pokemonDetailList }): PokemonState => ({
