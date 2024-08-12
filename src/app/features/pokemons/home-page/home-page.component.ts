@@ -44,7 +44,7 @@ export class HomePageComponent {
       PokemonActions.loadPokemon({ offset: 0, limit: this.offset() })
     );
 
-    this.pokemonSignalStore.loadPokemonQuery({ offset: 0, limit: 6 });
+    this.pokemonSignalStore.loadPokemonQuery({ offset: 0, limit: this.offset() });
 
     this.pokemonList$.subscribe(() => {
       this.isLoading.update(() => false);
