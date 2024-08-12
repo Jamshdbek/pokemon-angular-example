@@ -40,29 +40,23 @@ export class HomePageComponent {
   );
 
   constructor() {
-    this.store.dispatch(
-      PokemonActions.loadPokemon({ offset: this.offset(), limit: 6 })
-    );
-
+    this.store.dispatch(PokemonActions.loadPokemon({ offset: 0, limit: 6 }));
     this.pokemonSignalStore.loadPokemonQuery({
       offset: this.offset(),
       limit: 6,
     });
-
     this.pokemonList$.subscribe(() => {
       this.isLoading.update(() => false);
     });
-    this.pokemonList$.subscribe((res) => {
-      console.log(res, 'come to data');
-    });
   }
+
   handleShowMore(): void {
     this.offset.update((x) => x + 6);
     this.isLoading.update(() => true);
     this.store.dispatch(
       PokemonActions.loadPokemon({
-        offset: 0,
-        limit: this.offset(),
+        offset: this.offset(),
+        limit: 6,
       })
     );
   }

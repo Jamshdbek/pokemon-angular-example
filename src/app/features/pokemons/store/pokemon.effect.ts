@@ -1,14 +1,23 @@
 import { Injectable, inject } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { PokemonActions } from './';
-import { catchError, forkJoin, map, mergeMap, of, switchMap } from 'rxjs';
+import { PokemonActions, PokemonSelectors } from './';
+import {
+  catchError,
+  forkJoin,
+  map,
+  mergeMap,
+  of,
+  switchMap,
+  withLatestFrom,
+} from 'rxjs';
 import { PokemonService } from '../pokemon.service';
+import { Store } from '@ngrx/store';
 
 @Injectable()
 export class PokemonEffect {
   private api = inject(PokemonService);
-  actions$ = inject(Actions);
-
+  private actions$ = inject(Actions);
+  private readonly store = inject(Store);
   // Effect for loading Pokémon list
   loadPokemon$ = createEffect(() =>
     this.actions$.pipe(
@@ -36,13 +45,16 @@ export class PokemonEffect {
   loadPokemonDetail$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(PokemonActions.loadPokemonSuccess),
-      mergeMap(({ pokemons }) =>
+      withLatestFrom(
+        this.store.select(PokemonSelectors.selectAllPokemonDetail)
+      ),
+      mergeMap(([{ pokemons }, existingDetails]) =>
         forkJoin(
           pokemons.map((item) => this.api.getPokemonDetails(item.name))
         ).pipe(
           map((detailsList) => {
             return PokemonActions.loadPokemonDetailSuccess({
-              pokemonDetailList: detailsList,
+              pokemonDetailList: [...existingDetails, ...detailsList],
             });
           }),
           catchError((err: { message: string }) =>

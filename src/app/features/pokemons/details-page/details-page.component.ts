@@ -1,4 +1,9 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnDestroy,
+  inject,
+} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { AsyncPipe } from '@angular/common';
@@ -11,7 +16,7 @@ import { PokemonActions, PokemonSelectors } from '../store';
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './details-page.component.html',
 })
-export class DetailsPageComponent {
+export class DetailsPageComponent implements OnDestroy {
   private store = inject(Store);
   private route = inject(ActivatedRoute);
   public isLoading$ = this.store.select(PokemonSelectors.selectLoading);
@@ -25,5 +30,8 @@ export class DetailsPageComponent {
         id: this.route.snapshot.params['id'],
       })
     );
+  }
+  ngOnDestroy(): void {
+    this.store.dispatch(PokemonActions.resetPokemonDetail());
   }
 }

@@ -27,6 +27,7 @@ export const loadPokemonDetailFailure = createAction(
   '[Pokemon] Error PokemonDetailError',
   props<{ errorMessage: string }>()
 );
+export const resetPokemonDetail = createAction('[Pokemon] Reset PokemonDetail');
 
 //  by id
 export const loadPokemonDetailById = createAction(

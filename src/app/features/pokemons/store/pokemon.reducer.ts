@@ -1,9 +1,9 @@
 import { createReducer, on } from '@ngrx/store';
-import  {PokemonActions} from './';
+import { PokemonActions } from './';
 import { PokemonDetail, PokemonList } from '../pokemon.type';
 export interface PokemonState {
   pokemons: PokemonList[];
-  pokemonDetailList: PokemonDetail[];  // pokemon details
+  pokemonDetailList: PokemonDetail[]; // pokemon details
   pokemonDetails: PokemonDetail | undefined; // connected by page
   error: string | null;
   loading: boolean;
@@ -19,22 +19,31 @@ export const initialState: PokemonState = {
 
 export const ProductReducer = createReducer(
   initialState,
-  on(PokemonActions.loadPokemon, (state): PokemonState => ({
-    ...state,
-    loading: true,
-    error: '',
-  })),
-  on(PokemonActions.loadPokemonSuccess, (state, { pokemons }): PokemonState => ({
-    ...state,
-    pokemons,
-    loading: false,
-    error: '',
-  })),
-  on(PokemonActions.loadPokemonFailure, (state, { errorMessage }): PokemonState => ({
-    ...state,
-    loading: false,
-    error: errorMessage,
-  })),
+  on(
+    PokemonActions.loadPokemon,
+    (state): PokemonState => ({
+      ...state,
+      loading: true,
+      error: '',
+    })
+  ),
+  on(
+    PokemonActions.loadPokemonSuccess,
+    (state, { pokemons }): PokemonState => ({
+      ...state,
+      pokemons,
+      loading: false,
+      error: '',
+    })
+  ),
+  on(
+    PokemonActions.loadPokemonFailure,
+    (state, { errorMessage }): PokemonState => ({
+      ...state,
+      loading: false,
+      error: errorMessage,
+    })
+  ),
 
   // pokemon by details list
   on(
@@ -55,18 +64,32 @@ export const ProductReducer = createReducer(
       error: '',
     })
   ),
-  on(PokemonActions.loadPokemonDetailFailure, (state, { errorMessage }): PokemonState => ({
-    ...state,
-    loading: false,
-    error: errorMessage,
-  })),
+  on(
+    PokemonActions.loadPokemonDetailFailure,
+    (state, { errorMessage }): PokemonState => ({
+      ...state,
+      loading: false,
+      error: errorMessage,
+    })
+  ),
+  on(
+    PokemonActions.resetPokemonDetail,
+    (state): PokemonState => ({
+      ...state,
+      pokemonDetailList: [],
+      pokemons: [],
+    })
+  ),
 
   // pokemon by details
-  on(PokemonActions.loadPokemonDetailById, (state): PokemonState => ({
-    ...state,
-    loading: true,
-    error: '',
-  })),
+  on(
+    PokemonActions.loadPokemonDetailById,
+    (state): PokemonState => ({
+      ...state,
+      loading: true,
+      error: '',
+    })
+  ),
   on(
     PokemonActions.loadPokemonDetailByIdSuccess,
     (state, { pokemonDetails }): PokemonState => ({
@@ -76,9 +99,12 @@ export const ProductReducer = createReducer(
       error: '',
     })
   ),
-  on(PokemonActions.loadPokemonDetailByIdFailure, (state, { errorMessage }): PokemonState => ({
-    ...state,
-    loading: false,
-    error: errorMessage,
-  }))
+  on(
+    PokemonActions.loadPokemonDetailByIdFailure,
+    (state, { errorMessage }): PokemonState => ({
+      ...state,
+      loading: false,
+      error: errorMessage,
+    })
+  )
 );
