@@ -1,3 +1,15 @@
+export type GetPokemonListRes = {
+  count: number;
+  next: string;
+  previous: null | number | string;
+  results: PokemonList[];
+}
+
+export type FilterPokemonList = {
+  offset: number;
+  limit: number;
+};
+
 export type PokemonList = {
   name: string;
   url: string;
@@ -10,7 +22,7 @@ export type PokemonDetail = {
   height: number;
   abilities: Ability[];
   spices: Species;
-  types: Type[];
+  types: PokemonType[];
   weight: number;
   sprites: Sprite;
   stats: Stat[];
@@ -26,7 +38,7 @@ type Species = {
   url: string;
 };
 
-type Type = {
+type PokemonType = {
   slot: number;
   type: {
     name: string;
